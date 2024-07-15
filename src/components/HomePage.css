@@ -1,0 +1,108 @@
+.home-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    color: #eeeeee;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .category-filter {
+    direction: rtl;
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px 0;
+    overflow-x: auto;
+    padding: 10px;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on touch devices */
+  }
+  
+  /* Hide scrollbar for WebKit browsers (Safari, Chrome) */
+  .category-filter::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .category-filter {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .category-filter button {
+    background-color: #737373;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in-out;
+    white-space: nowrap; /* Ensure buttons don't wrap text */
+  }
+  
+  .category-filter button:hover {
+    background-color: #212121;
+  }
+  
+  /* Active category button styling */
+.category-filter button.active {
+    background-color: #212121;
+    font-weight: bold;
+  }
+  .section {
+    background: #1e1e1e;
+
+    margin: 20px 0;
+    border-radius: 15px;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 2px;
+  }
+  li {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+  }
+  
+  /* Hover effect for list items */
+  li:hover {
+    background-color: #292929;
+  }
+
+  
+  .category-title {
+    padding: 12px;
+    margin: 2px;
+  }
+  
+  .service-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .service-details {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .service-price, .service-duration {
+    padding: 5px;
+  }
+  
+  .book-button {
+    margin: 10px 5px;
+    border-radius: 15px;
+  }

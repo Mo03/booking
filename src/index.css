@@ -5,9 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #292929;
+  direction: rtl;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+/* src/index.css */
+.home-page, .service-details-page, .booking-form {
+  padding: 20px;
+}
+
+.categories, .services {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category, .service {
+  margin: 10px;
+}
+
+@media (max-width: 600px) {
+  .categories, .services {
+    flex-direction: column;
+  }
+
+  .category, .service {
+    width: 100%;
+  }
 }
