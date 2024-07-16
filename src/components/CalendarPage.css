@@ -1,0 +1,23 @@
+.calendar-page {
+    position: relative;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #eee;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    text-decoration: underline;
+  }

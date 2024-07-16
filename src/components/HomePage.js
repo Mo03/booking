@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCategoriesWithServices } from "../services/api";
-import "./HomePage.css"; // Assume you have a CSS file for styling
+import AvailableSlotsCalendar from "./AvailableSlotsCalendar";
 import CategoryFilter from "./CategoryFilter";
 import ServiceList from "./ServiceList";
+import "./HomePage.css";
 
 const HomePage = () => {
   const [services, setServices] = useState([]);
@@ -11,6 +13,8 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState({ name: "الكل" });
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     fetchCategoriesAndServices();
@@ -50,7 +54,11 @@ const HomePage = () => {
   };
 
   const handleBook = (service) => {
-    alert(`Service ${service.name} booked!`);
+    navigate(`/calendar/${service.id}`); // Navigate to calendar page with service ID
+  };
+
+  const handleSelectService = (serviceId) => {
+    setSelectedServiceId(serviceId);
   };
 
   return (
@@ -67,9 +75,16 @@ const HomePage = () => {
         {loading ? (
           <div>Loading services...</div>
         ) : (
-          <ServiceList services={filteredServices} onBook={handleBook} />
+          <ServiceList
+            services={filteredServices}
+            onBook={handleBook}
+            onSelectService={handleSelectService}
+          />
         )}
       </div>
+      {selectedServiceId && (
+        <AvailableSlotsCalendar serviceId={selectedServiceId} />
+      )}
     </div>
   );
 };

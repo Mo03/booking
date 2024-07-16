@@ -52,3 +52,8 @@ export const getCategoriesWithServices = async (tenantID) => {
   console.log("getCategoriesWithServices", tenantID);
   return handleRequest("get", "/Categories/services", null, null, tenantID);
 };
+export const getAvailableSlots = async (data, tenantID) => {
+  console.log("getAvailableSlots", data, tenantID);
+  const url = `/Bookings/available-slots?serviceId=${data.serviceId}&startDate=${data.startDate}&endDate=${data.endDate}`;
+  return handleRequest("get", url, null, null, tenantID);
+};
