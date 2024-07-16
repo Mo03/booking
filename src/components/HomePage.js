@@ -23,7 +23,7 @@ const HomePage = () => {
   const fetchCategoriesAndServices = async () => {
     setLoading(true);
     try {
-      const data = await getCategoriesWithServices("tested");
+      const data = await getCategoriesWithServices("HAR");
       setCategories(data);
       const allServices = data.flatMap((category) =>
         category.services.map((service) => ({

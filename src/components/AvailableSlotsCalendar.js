@@ -1,23 +1,29 @@
+// src/components/AvailableSlotsCalendar.jsx
+
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Import default styles for the calendar
-import "./AvailableSlotsCalendar.css"; // Import your custom styles
-import { getAvailableSlots } from "../services/api"; // Assume this function makes the API call
+import "react-calendar/dist/Calendar.css";
+import "./AvailableSlotsCalendar.css";
+import { getAvailableSlots } from "../services/api";
+import { useTenant } from "../TenantContext";
 
 const AvailableSlotsCalendar = ({ serviceId }) => {
+  const tenantID = useTenant();
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (serviceId) {
-      fetchAvailableSlots(serviceId);
+      fetchAvailableSlots(serviceId, tenantID);
     }
-  }, [serviceId]);
+  }, [serviceId, tenantID]);
 
-  const fetchAvailableSlots = async (serviceId) => {
+  const fetchAvailableSlots = async (serviceId, tenantID) => {
     setLoading(true);
     const data = {
       serviceId,
@@ -25,7 +31,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
       endDate: "2024-07-23",
     };
     try {
-      const response = await getAvailableSlots(data, "tested");
+      const response = await getAvailableSlots(data, tenantID);
       setAvailableSlots(response);
     } catch (error) {
       console.error("Error fetching available slots:", error);
@@ -49,6 +55,12 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
     setSelectedTime(slot ? slot.availableTimes : []);
   };
 
+  const handleBookClick = (time) => {
+    navigate(`/calendar/${serviceId}/booking`, {
+      state: { serviceId, selectedDate, selectedTime: time },
+    });
+  };
+
   return (
     <div className="available-slots-calendar">
       {error && <div className="error">{error}</div>}
@@ -66,7 +78,10 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
               <h3>Available Times for {selectedDate.toDateString()}</h3>
               <ul>
                 {selectedTime.map((time, index) => (
-                  <li key={index}>{time}</li>
+                  <li key={index}>
+                    {time}{" "}
+                    <button onClick={() => handleBookClick(time)}>Book</button>
+                  </li>
                 ))}
               </ul>
             </div>
