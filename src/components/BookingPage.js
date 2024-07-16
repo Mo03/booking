@@ -4,8 +4,11 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./BookingPage.css";
+import { useTenant } from "../TenantContext";
 
 const BookingPage = () => {
+  const tenantID = useTenant();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -53,7 +56,7 @@ const BookingPage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-Tenant-ID": "HAR",
+            "X-Tenant-ID": tenantID,
           },
         }
       );
