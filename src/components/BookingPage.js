@@ -4,6 +4,7 @@ import axios from "axios";
 import "./BookingPage.css";
 import { useTenant } from "../TenantContext";
 import { addBooking } from "../services/api";
+import backIcon from "../assets/backIcon.svg"; // Import the image
 
 const BookingPage = () => {
   const tenantID = useTenant();
@@ -55,58 +56,67 @@ const BookingPage = () => {
   };
 
   return (
-    <div className="booking-page">
-      <button className="back-button" onClick={handleBackClick}>
-        &larr; Back
-      </button>
-      {bookingReference ? (
-        <div className="booking-confirmation">
-          <h2>Booking Confirmed!</h2>
-          <p>Your booking reference is: {bookingReference}</p>
-        </div>
-      ) : (
-        <form className="booking-form" onSubmit={handleBooking}>
-          <h2>Book Your Slot</h2>
-          {error && <div className="error">{error}</div>}
-          <label>
-            First Name:
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Phone:
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-          </label>
-          <button type="submit">Book Slot</button>
-        </form>
-      )}
+    <div className="booking-page-container">
+      <div className="header">
+        <button className="back-button" onClick={handleBackClick}>
+          <img
+            src={backIcon}
+            alt="Back"
+            style={{ width: "24px", height: "24px" }}
+          />
+        </button>
+        <h4 style={{ marginTop: "13px" }}>{tenantID}</h4>
+      </div>
+      <div className="booking-page">
+        {bookingReference ? (
+          <div className="booking-confirmation">
+            <h2>Booking Confirmed!</h2>
+            <p>Your booking reference is: {bookingReference}</p>
+          </div>
+        ) : (
+          <form className="booking-form" onSubmit={handleBooking}>
+            <h2>Book Your Slot</h2>
+            {error && <div className="error">{error}</div>}
+            <label>
+              First Name:
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Last Name:
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Phone:
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit">Book Slot</button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

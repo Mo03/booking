@@ -65,7 +65,7 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <h1>HomePage</h1>
+      <h1>{tenantID}</h1>
       {error && <div className="error">{error}</div>}
       <CategoryFilter
         categories={categories}

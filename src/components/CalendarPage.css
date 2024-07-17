@@ -4,9 +4,11 @@
   }
   
   .header {
-    display: flex;
-    justify-content: space-between;
+     display: flex;
+    /*justify-content: space-between;
+    align-items: center; */
     align-items: center;
+    align-self: center;
     direction: rtl;
   }
   
@@ -14,10 +16,14 @@
     background: none;
     border: none;
     color: #eee;
-    font-size: 16px;
+    font-size: 8px;
     cursor: pointer;
   }
   
   .back-button:hover {
     text-decoration: underline;
+  }
+  
+  .react-calendar__navigation button{
+    color: #eee;
   }
