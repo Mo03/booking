@@ -57,3 +57,7 @@ export const getAvailableSlots = async (data, tenantID) => {
   const url = `/Bookings/available-slots?serviceId=${data.serviceId}&startDate=${data.startDate}&endDate=${data.endDate}`;
   return handleRequest("get", url, null, null, tenantID);
 };
+
+export const addBooking = async (data, tenantID) => {
+  return handleRequest("post", "/Bookings", data, null, tenantID);
+};

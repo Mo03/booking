@@ -5,8 +5,10 @@ import AvailableSlotsCalendar from "./AvailableSlotsCalendar";
 import CategoryFilter from "./CategoryFilter";
 import ServiceList from "./ServiceList";
 import "./HomePage.css";
+import { useTenant } from "../TenantContext";
 
 const HomePage = () => {
+  const tenantID = useTenant();
   const [services, setServices] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
@@ -23,7 +25,7 @@ const HomePage = () => {
   const fetchCategoriesAndServices = async () => {
     setLoading(true);
     try {
-      const data = await getCategoriesWithServices("HAR");
+      const data = await getCategoriesWithServices(tenantID);
       setCategories(data);
       const allServices = data.flatMap((category) =>
         category.services.map((service) => ({

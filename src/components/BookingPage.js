@@ -1,10 +1,9 @@
-// src/components/BookingPage.jsx
-
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./BookingPage.css";
 import { useTenant } from "../TenantContext";
+import { addBooking } from "../services/api";
 
 const BookingPage = () => {
   const tenantID = useTenant();
@@ -26,12 +25,8 @@ const BookingPage = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
 
-    // Create a new date object from selectedDate
-    // Create a new date object from selectedDate
     const updatedDate = new Date(selectedDate);
-    // Add one day
 
-    // Format the date to YYYY-MM-DDTHH:mm:ss
     const year = updatedDate.getFullYear();
     const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
     const day = String(updatedDate.getDate()).padStart(2, "0");
@@ -50,17 +45,9 @@ const BookingPage = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5219/api/Bookings",
-        bookingData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Tenant-ID": tenantID,
-          },
-        }
-      );
-      setBookingReference(response.data.reference);
+      const response = await addBooking(bookingData, tenantID);
+      console.log("response ----------->", response);
+      setBookingReference(response.reference);
     } catch (error) {
       console.error("Error booking slot:", error);
       setError("Error booking slot");
