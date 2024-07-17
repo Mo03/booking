@@ -18,7 +18,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (serviceId) {
+    if (serviceId && tenantID) {
       fetchAvailableSlots(serviceId, tenantID, currentMonth);
     }
   }, [serviceId, tenantID, currentMonth]);
@@ -41,6 +41,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
     try {
       const response = await getAvailableSlots(data, tenantID);
       setAvailableSlots(response);
+      console.log("Available slots fetched:", response);
     } catch (error) {
       console.error("Error fetching available slots:", error);
       setError("Error fetching available slots");
@@ -64,6 +65,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
   };
 
   const handleMonthChange = ({ activeStartDate }) => {
+    console.log("Month changed:", activeStartDate);
     setCurrentMonth(activeStartDate);
   };
 
@@ -95,7 +97,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
             onChange={handleDateChange}
             onActiveStartDateChange={handleMonthChange}
             tileDisabled={({ date }) => !isDateAvailable(date)}
-            value={selectedDate}
+            value={selectedDate || currentMonth} // Ensure the calendar reflects the current month or selected date
           />
           {selectedDate && selectedTime.length > 0 && (
             <div className="time-slots">
