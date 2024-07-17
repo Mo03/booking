@@ -5,6 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import "./AvailableSlotsCalendar.css";
 import { getAvailableSlots } from "../services/api";
 import { useTenant } from "../TenantContext";
+import { FaCalendarAlt } from "react-icons/fa"; // Import the calendar icon from react-icons
 
 const AvailableSlotsCalendar = ({ serviceId }) => {
   const tenantID = useTenant();
@@ -84,7 +85,10 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
           />
           {selectedDate && selectedTime.length > 0 && (
             <div className="time-slots">
-              <h3>Available Times for {selectedDate.toDateString()}</h3>
+              <h4 style={{ direction: "ltr" }}>
+                <FaCalendarAlt className="calendar-icon" />
+                {selectedDate.toDateString()}
+              </h4>
               <ul>
                 {selectedTime.map((time, index) => (
                   <li key={index} className="time-slot-item">
