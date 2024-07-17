@@ -1,5 +1,3 @@
-// src/components/AvailableSlotsCalendar.jsx
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -55,6 +53,17 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
     setSelectedTime(slot ? slot.availableTimes : []);
   };
 
+  const formatTime = (time) => {
+    const [hour, minute] = time.split(":");
+    const date = new Date();
+    date.setHours(hour, minute);
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
   const handleBookClick = (time) => {
     navigate(`/calendar/${serviceId}/booking`, {
       state: { serviceId, selectedDate, selectedTime: time },
@@ -78,8 +87,8 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
               <h3>Available Times for {selectedDate.toDateString()}</h3>
               <ul>
                 {selectedTime.map((time, index) => (
-                  <li key={index}>
-                    {time}{" "}
+                  <li key={index} className="time-slot-item">
+                    {formatTime(time)}
                     <button onClick={() => handleBookClick(time)}>Book</button>
                   </li>
                 ))}
