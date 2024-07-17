@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:5219/api";
+const baseURL = "https://bookly-code-dev.azurewebsites.net/api";
 
 const api = axios.create({
   baseURL,

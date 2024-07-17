@@ -4,8 +4,7 @@ import { getTenantIDFromSubdomain } from "./utils/subdomain";
 const TenantContext = createContext();
 
 export const TenantProvider = ({ children }) => {
-  //   const tenantID = getTenantIDFromSubdomain();
-  const tenantID = "HAR";
+  const tenantID = getTenantIDFromSubdomain();
   return (
     <TenantContext.Provider value={tenantID}>{children}</TenantContext.Provider>
   );

@@ -1,12 +1,17 @@
-// src/App.jsx
-
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import HomePage from "./components/HomePage"; // Import your HomePage component
-import CalendarPage from "./components/CalendarPage"; // Import the new CalendarPage component
-import BookingPage from "./components/BookingPage"; // Import the BookingPage component
+import HomePage from "./components/HomePage";
+import CalendarPage from "./components/CalendarPage";
+import BookingPage from "./components/BookingPage";
+import { useTenant } from "./TenantContext";
 
 const App = () => {
+  const tenantID = useTenant();
+
+  useEffect(() => {
+    document.title = tenantID + " [ Book now ]";
+  }, []);
+
   return (
     <Router>
       <Routes>
