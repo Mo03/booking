@@ -14,21 +14,30 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
   const [selectedTime, setSelectedTime] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const navigate = useNavigate();
 
   useEffect(() => {
     if (serviceId) {
-      fetchAvailableSlots(serviceId, tenantID);
+      fetchAvailableSlots(serviceId, tenantID, currentMonth);
     }
-  }, [serviceId, tenantID]);
+  }, [serviceId, tenantID, currentMonth]);
 
-  const fetchAvailableSlots = async (serviceId, tenantID) => {
+  const fetchAvailableSlots = async (serviceId, tenantID, date) => {
     setLoading(true);
+    const startDate = new Date(date.getFullYear(), date.getMonth(), 1)
+      .toISOString()
+      .split("T")[0];
+    const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+      .toISOString()
+      .split("T")[0];
+
     const data = {
       serviceId,
-      startDate: "2024-07-13",
-      endDate: "2024-07-23",
+      startDate,
+      endDate,
     };
+
     try {
       const response = await getAvailableSlots(data, tenantID);
       setAvailableSlots(response);
@@ -52,6 +61,10 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
       (slot) => new Date(slot.date).toDateString() === date.toDateString()
     );
     setSelectedTime(slot ? slot.availableTimes : []);
+  };
+
+  const handleMonthChange = ({ activeStartDate }) => {
+    setCurrentMonth(activeStartDate);
   };
 
   const formatTime = (time) => {
@@ -80,6 +93,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
         <>
           <Calendar
             onChange={handleDateChange}
+            onActiveStartDateChange={handleMonthChange}
             tileDisabled={({ date }) => !isDateAvailable(date)}
             value={selectedDate}
           />
