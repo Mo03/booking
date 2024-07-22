@@ -21,6 +21,7 @@ const BookingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { serviceId, selectedDate, selectedTime, serviceName } = location.state;
+  const [serviceInfo, setServiceInfo] = useState();
 
   const handleBackClick = () => {
     navigate(-1);
@@ -73,6 +74,7 @@ const BookingPage = () => {
     try {
       const response = await addBooking(bookingData, tenantID);
       setBookingReference(response.reference);
+      setServiceInfo(response.service);
     } catch (error) {
       console.error("Error booking slot:", error);
       setErrors({ form: "Error booking slot" });
@@ -160,7 +162,23 @@ const BookingPage = () => {
                 alt="Service"
                 style={{ width: "20px", marginRight: "8px" }}
               /> */}
-              {/* Service: <span> &nbsp; {serviceName} </span> */}
+              Service: <span> &nbsp; {serviceInfo.name} </span>
+            </p>
+            <p>
+              {/* <img
+                src={serviceIcon}
+                alt="Service"
+                style={{ width: "20px", marginRight: "8px" }}
+              /> */}
+              Price: <span> &nbsp; {serviceInfo.price} ريال</span>
+            </p>
+            <p>
+              {/* <img
+                src={serviceIcon}
+                alt="Service"
+                style={{ width: "20px", marginRight: "8px" }}
+              /> */}
+              Duration: <span> &nbsp; {serviceInfo.duration} دقيقة</span>
             </p>
           </div>
         ) : (

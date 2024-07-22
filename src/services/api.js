@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://bookly-code-dev.azurewebsites.net/api";
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const api = axios.create({
   baseURL,
