@@ -64,7 +64,7 @@ const BookingPage = () => {
         firstName,
         lastName,
         email,
-        phone,
+        PhoneNumber,
       },
       serviceId,
       bookingDate: formattedDate,
