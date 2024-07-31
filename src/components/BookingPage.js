@@ -15,7 +15,7 @@ const BookingPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [PhoneNumber, setPhone] = useState("");
   const [bookingReference, setBookingReference] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -38,9 +38,10 @@ const BookingPage = () => {
       newErrors.email = "Invalid email format";
 
     const phonePattern = /^5\d{8}$/;
-    if (!phone) newErrors.phone = "Phone number is required";
-    else if (!phonePattern.test(phone))
-      newErrors.phone = "Phone number must start with '5' and be 9 digits long";
+    if (!PhoneNumber) newErrors.PhoneNumber = "Phone number is required";
+    else if (!phonePattern.test(PhoneNumber))
+      newErrors.PhoneNumber =
+        "Phone number must start with '5' and be 9 digits long";
 
     return newErrors;
   };
@@ -213,11 +214,13 @@ const BookingPage = () => {
             <label style={{ margin: "5px 0" }}>Phone:</label>
             <input
               type="tel"
-              value={phone}
+              value={PhoneNumber}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
-            {errors.phone && <div className="error">{errors.phone}</div>}
+            {errors.PhoneNumber && (
+              <div className="error">{errors.PhoneNumber}</div>
+            )}
             <button type="submit">Book</button>
           </form>
         )}
