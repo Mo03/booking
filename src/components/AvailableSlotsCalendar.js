@@ -101,15 +101,18 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
           />
           {selectedDate && selectedTime.length > 0 && (
             <div className="time-slots">
-              <h4 style={{ direction: "ltr" }}>
+              <h4 style={{ direction: "ltr", color: "#333333" }}>
                 <FaCalendarAlt className="calendar-icon" />
                 {selectedDate.toDateString()}
               </h4>
               <ul>
                 {selectedTime.map((time, index) => (
-                  <li key={index} className="time-slot-item">
+                  <li
+                    key={index}
+                    className="time-slot-item"
+                    onClick={() => handleBookClick(time)}
+                  >
                     {formatTime(time)}
-                    <button onClick={() => handleBookClick(time)}>Book</button>
                   </li>
                 ))}
               </ul>
