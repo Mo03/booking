@@ -73,7 +73,8 @@
     padding: 10px;
     border-radius: 15px;
     border: 1px solid #eee;
-    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
   }
   
   /* Hover effect for list items */
@@ -91,6 +92,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    cursor: pointer;
   }
   
   .service-details {
@@ -102,7 +104,38 @@
     padding: 5px;
   }
   
-  .book-button {
-    margin: 10px 5px;
+  /* Add these new styles */
+  .category-section {
+    margin-bottom: 30px;
+    background: #fff;
     border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .category-title {
+    color: #292929;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 2px solid #eee;
+  }
+  
+  /* Update existing styles */
+  .service-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .service-item {
+    margin: 10px 0;
+    background: #f8f8f8;
+  }
+  
+  .service-item:hover {
+    background-color: #eee;
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
   }

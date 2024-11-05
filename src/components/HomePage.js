@@ -8,16 +8,14 @@ import "./HomePage.css";
 import { useTenant } from "../TenantContext";
 
 const HomePage = () => {
-  // const tenantID = useTenant();
   const tenantID = "testty";
   const [services, setServices] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [filteredServices, setFilteredServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState({ name: "الكل" });
   const [selectedServiceId, setSelectedServiceId] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategoriesAndServices();
@@ -28,14 +26,7 @@ const HomePage = () => {
     try {
       const data = await getCategoriesWithServices(tenantID);
       setCategories(data);
-      const allServices = data.flatMap((category) =>
-        category.services.map((service) => ({
-          ...service,
-          categoryName: category.name,
-        }))
-      );
-      setServices(allServices);
-      setFilteredServices(allServices);
+      setServices(data);
     } catch (error) {
       console.error("Error fetching categories and services:", error);
       setError("Error fetching categories and services");
@@ -46,18 +37,10 @@ const HomePage = () => {
 
   const filterServicesByCategory = (category) => {
     setSelectedCategory(category);
-    if (category.name === "الكل") {
-      setFilteredServices(services);
-    } else {
-      const filtered = services.filter(
-        (service) => service.categoryName === category.name
-      );
-      setFilteredServices(filtered);
-    }
   };
 
   const handleBook = (service) => {
-    navigate(`/calendar/${service.id}`); // Navigate to calendar page with service ID
+    navigate(`/calendar/${service.id}`);
   };
 
   const handleSelectService = (serviceId) => {
@@ -74,14 +57,14 @@ const HomePage = () => {
         onSelectCategory={filterServicesByCategory}
       />
       <div className="section">
-        <h2 className="category-title">{selectedCategory.name}</h2>
         {loading ? (
           <div>Loading services...</div>
         ) : (
           <ServiceList
-            services={filteredServices}
+            categories={categories}
+            services={services}
             onBook={handleBook}
-            onSelectService={handleSelectService}
+            selectedCategory={selectedCategory}
           />
         )}
       </div>
