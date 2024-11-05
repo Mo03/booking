@@ -1,7 +1,7 @@
 .home-page {
     font-family: Arial, sans-serif;
     padding: 20px;
-    color: #eeeeee;
+    color: #292929;
   }
   
   h1 {
@@ -33,7 +33,7 @@
   .category-filter button {
     background-color: #737373;
     border: none;
-    color: white;
+    color: #292929;
     padding: 10px 20px;
     margin: 0 5px;
     cursor: pointer;
@@ -43,16 +43,16 @@
   }
   
   .category-filter button:hover {
-    background-color: #212121;
+    background-color: #eee;
   }
   
   /* Active category button styling */
 .category-filter button.active {
-    background-color: #212121;
+    background-color: #eee;
     font-weight: bold;
   }
   .section {
-    background: #1e1e1e;
+    background: #f4f4f4;
     padding: 10px;
     margin: 20px 0;
     border-radius: 15px;
@@ -72,13 +72,13 @@
     margin: 5px 0;
     padding: 10px;
     border-radius: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #eee;
     transition: background-color 0.3s ease-in-out; /* Smooth transition */
   }
   
   /* Hover effect for list items */
   li:hover {
-    background-color: #292929;
+    background-color: #eee;
   }
 
   
