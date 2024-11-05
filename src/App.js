@@ -6,8 +6,7 @@ import BookingPage from "./components/BookingPage";
 import { useTenant } from "./TenantContext";
 
 const App = () => {
-  // const tenantID = useTenant();
-  const tenantID = "testty";
+  const tenantID = useTenant();
 
   useEffect(() => {
     document.title = tenantID + " [ Book now ]";

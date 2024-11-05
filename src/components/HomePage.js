@@ -8,7 +8,7 @@ import "./HomePage.css";
 import { useTenant } from "../TenantContext";
 
 const HomePage = () => {
-  const tenantID = "testty";
+  const tenantID = useTenant();
   const [services, setServices] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);

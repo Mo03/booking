@@ -1,31 +1,31 @@
 .react-calendar {
-    background-color: #1e1e1e;
-    color: #fff;
-    border: 1px solid #292929;
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #cccccc;
     border-radius: 8px;
     margin: auto;
   }
   
   .react-calendar__tile {
-    background-color: #292929;
-    color: #fff;
+    background-color: #f9f9f9;
+    color: #333333;
     border-radius: 4px;
-    border: 3px solid #eee;
+    border: 3px solid #dddddd;
   }
   
   .react-calendar__tile--active {
-    background-color: #1e1e1e;
-    color: #fff;
+    background-color: #e0e0e0;
+    color: #333333;
   }
   
   .react-calendar__tile--now {
-    background-color: #1e1e1e;
-    color: #fff;
+    background-color: #e0e0e0;
+    color: #333333;
   }
   
   .react-calendar__tile:disabled {
-    background-color: #1e1e1e;
-    color: #737373;
+    background-color: #f0f0f0;
+    color: #aaaaaa;
   }
   
   
@@ -34,7 +34,7 @@
   }
   
   .time-slots h3 {
-    color: #fff;
+    color: #333333;
   }
   
   .time-slots ul {
@@ -43,19 +43,22 @@
   }
   
   .time-slots li {
-    background-color: #292929;
-    color: #fff;
+    background-color: #f0f0f0;
+    color: #333333;
     padding: 10px;
     margin: 5px 0;
     border-radius: 4px;
   }
 
   .available-slots-calendar {
-    padding: 16px;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 20px;
+    border-radius: 8px;
   }
   
-  .error {
-    color: red;
+  .available-slots-calendar .error {
+    color: #ff4d4f;
   }
   
   .time-slots {
@@ -87,7 +90,7 @@
     margin-left: 8px;
   }
   .available-slots-calendar {
-    background-color: #1e1e1e;
+    background-color: #eee;
     color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -120,8 +123,8 @@
   }
   
   .time-slot-item button {
-    background-color: #eee;
-    color: #1e1e1e;
+    background-color: #f0f0f0;
+    color: #333333;
     border: none;
     border-radius: 4px;
     padding: 5px 10px;
@@ -129,5 +132,5 @@
   }
   
   .time-slot-item button:hover {
-    background-color: #0056b3;
+    background-color: #cccccc;
   }

@@ -8,7 +8,7 @@
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #1e1e1e;
+    background-color: #ffffff;
     border-radius: 8px;
   }
 
@@ -20,6 +20,7 @@
   
   .booking-form label {
     margin-bottom: 10px;
+    color: #333333;
   }
   
   .booking-form input {
@@ -27,15 +28,15 @@
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #292929;
-    color: #eee;
+    background-color: #f9f9f9;
+    color: #333333;
   }
   
   .booking-form button {
     margin-top: 50px;
     padding: 10px;
-    background-color: #eee;
-    color: #1e1e1e;
+    background-color: #333333;
+    color: #ffffff;
     font-size: large;
     border: none;
     border-radius: 4px;
@@ -43,24 +44,24 @@
   }
   
   .booking-form button:hover {
-    background-color: #0056b3;
+    background-color: #555555;
   }
   
   .error {
-    color: red;
+    color: #ff4d4f;
     margin-bottom: 10px;
   }
   
 
   
   .booking-confirmation h2  {
-    color: #eeeeee;
+    color: #333333;
     text-align: center;
   }
   
   .booking-confirmation h4  {
     text-align: center;
-    color: #eeeeee;
+    color: #333333;
   }
   
   .booking-confirmation p  {
@@ -68,10 +69,10 @@
     align-items: center;
     justify-self: center;
     direction: ltr;
-    color: #eeeeee;
+    color: #333333;
   }
   .booking-confirmation p span {
-    color: #949494;
+    color: #666666;
 
   }
 
@@ -81,7 +82,7 @@
       max-width: 500px;
       margin: 20px;
       padding: 20px;
-      background-color: #1e1e1e;
+      background-color: #ffffff;
       border-radius: 8px;
     }
   }

@@ -1,10 +1,9 @@
 import React, { createContext, useContext } from "react";
-import { getTenantIDFromSubdomain } from "./utils/subdomain";
 
 const TenantContext = createContext();
 
 export const TenantProvider = ({ children }) => {
-  const tenantID = getTenantIDFromSubdomain();
+  const tenantID = "testty"; // Hardcoded tenantID for testing
   return (
     <TenantContext.Provider value={tenantID}>{children}</TenantContext.Provider>
   );
