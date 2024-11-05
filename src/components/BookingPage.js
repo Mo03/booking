@@ -29,19 +29,19 @@ const BookingPage = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!firstName) newErrors.firstName = "First name is required";
-    if (!lastName) newErrors.lastName = "Last name is required";
+    if (!firstName) newErrors.firstName = "الاسم الأول مطلوب";
+    if (!lastName) newErrors.lastName = "اسم العائلة مطلوب";
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) newErrors.email = "Email is required";
+    if (!email) newErrors.email = "البريد الإلكتروني مطلوب";
     else if (!emailPattern.test(email))
-      newErrors.email = "Invalid email format";
+      newErrors.email = "تنسيق البريد الإلكتروني غير صالح";
 
     const phonePattern = /^5\d{8}$/;
-    if (!PhoneNumber) newErrors.PhoneNumber = "Phone number is required";
+    if (!PhoneNumber) newErrors.PhoneNumber = "رقم الهاتف مطلوب";
     else if (!phonePattern.test(PhoneNumber))
       newErrors.PhoneNumber =
-        "Phone number must start with '5' and be 9 digits long";
+        "يجب أن يبدأ رقم الهاتف بـ '5' وأن يكون مكونًا من 9 أرقام";
 
     return newErrors;
   };
@@ -78,7 +78,7 @@ const BookingPage = () => {
       setServiceInfo(response.service);
     } catch (error) {
       console.error("Error booking slot:", error);
-      setErrors({ form: "Error booking slot" });
+      setErrors({ form: "خطأ في حجز الموعد" });
     }
   };
 
@@ -93,7 +93,7 @@ const BookingPage = () => {
   const handleCopyBookingID = () => {
     navigator.clipboard.writeText(bookingReference).then(
       () => {
-        alert("Booking ID copied to clipboard!");
+        alert("تم نسخ رقم الحجز إلى الحافظة!");
       },
       (err) => {
         console.error("Could not copy booking ID: ", err);
@@ -116,15 +116,15 @@ const BookingPage = () => {
       <div className="booking-page">
         {bookingReference ? (
           <div className="booking-confirmation">
-            <h2>! Booking Confirmed</h2>
-            <h4>with {tenantID}</h4>
+            <h2>! تم تأكيد الحجز</h2>
+            <h4>مع {tenantID}</h4>
             <p>
               <img
                 src={dateIcon}
                 alt="Date"
                 style={{ width: "20px", marginRight: "8px" }}
               />
-              Date: <span> &nbsp; {formattedDate}</span>
+              التاريخ: <span> &nbsp; {formattedDate}</span>
             </p>
             <p>
               <img
@@ -132,15 +132,10 @@ const BookingPage = () => {
                 alt="Time"
                 style={{ width: "20px", marginRight: "8px" }}
               />
-              Time: <span> &nbsp; {formattedTime}</span>
+              الوقت: <span> &nbsp; {formattedTime}</span>
             </p>
             <p>
-              {/* <img
-                src={bookingIcon}
-                alt="Booking ID"
-                style={{ width: "20px", marginRight: "8px" }}
-              /> */}
-              Booking ID: <span> &nbsp; {bookingReference} </span>
+              رقم الحجز: <span> &nbsp; {bookingReference} </span>
               <button
                 onClick={handleCopyBookingID}
                 style={{
@@ -158,34 +153,19 @@ const BookingPage = () => {
               </button>
             </p>
             <p>
-              {/* <img
-                src={serviceIcon}
-                alt="Service"
-                style={{ width: "20px", marginRight: "8px" }}
-              /> */}
-              Service: <span> &nbsp; {serviceInfo.name} </span>
+              الخدمة: <span> &nbsp; {serviceInfo.name} </span>
             </p>
             <p>
-              {/* <img
-                src={serviceIcon}
-                alt="Service"
-                style={{ width: "20px", marginRight: "8px" }}
-              /> */}
-              Price: <span> &nbsp; {serviceInfo.price} ريال</span>
+              السعر: <span> &nbsp; {serviceInfo.price} ريال</span>
             </p>
             <p>
-              {/* <img
-                src={serviceIcon}
-                alt="Service"
-                style={{ width: "20px", marginRight: "8px" }}
-              /> */}
-              Duration: <span> &nbsp; {serviceInfo.duration} دقيقة</span>
+              المدة: <span> &nbsp; {serviceInfo.duration} دقيقة</span>
             </p>
           </div>
         ) : (
           <form className="booking-form" onSubmit={handleBooking}>
             {errors.form && <div className="error">{errors.form}</div>}
-            <label>First Name:</label>
+            <label>الاسم الأول:</label>
             <input
               type="text"
               value={firstName}
@@ -195,7 +175,7 @@ const BookingPage = () => {
             {errors.firstName && (
               <div className="error">{errors.firstName}</div>
             )}
-            <label style={{ margin: "5px 0" }}>Last Name:</label>
+            <label style={{ margin: "5px 0" }}>اسم العائلة:</label>
             <input
               type="text"
               value={lastName}
@@ -203,7 +183,7 @@ const BookingPage = () => {
               required
             />
             {errors.lastName && <div className="error">{errors.lastName}</div>}
-            <label style={{ margin: "5px 0" }}>Email:</label>
+            <label style={{ margin: "5px 0" }}>البريد الإلكتروني:</label>
             <input
               type="email"
               value={email}
@@ -211,7 +191,7 @@ const BookingPage = () => {
               required
             />
             {errors.email && <div className="error">{errors.email}</div>}
-            <label style={{ margin: "5px 0" }}>Phone:</label>
+            <label style={{ margin: "5px 0" }}>الهاتف:</label>
             <input
               type="tel"
               value={PhoneNumber}
@@ -221,7 +201,7 @@ const BookingPage = () => {
             {errors.PhoneNumber && (
               <div className="error">{errors.PhoneNumber}</div>
             )}
-            <button type="submit">Book</button>
+            <button type="submit">احجز</button>
           </form>
         )}
       </div>
