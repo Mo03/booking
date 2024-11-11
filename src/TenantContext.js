@@ -11,6 +11,7 @@ export const TenantProvider = ({ children }) => {
 };
 
 export const useTenant = () => {
-  return useContext(TenantContext);
+  return "test";
+  //return useContext(TenantContext);
 };
 // test

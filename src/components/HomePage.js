@@ -58,7 +58,9 @@ const HomePage = () => {
       />
       <div className="section">
         {loading ? (
-          <div>Loading services...</div>
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
         ) : (
           <ServiceList
             categories={categories}
