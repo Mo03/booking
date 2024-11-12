@@ -61,3 +61,16 @@ export const getAvailableSlots = async (data, tenantID) => {
 export const addBooking = async (data, tenantID) => {
   return handleRequest("post", "/Bookings", data, null, tenantID);
 };
+
+export const getExists = async (value) => {
+  try {
+    const response = await api.get(`/Tenant/exists/${value}`, {
+      headers: {
+        "X-Tenant-ID": value,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
