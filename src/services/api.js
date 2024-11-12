@@ -49,7 +49,7 @@ export const getServices = async (jwtToken) => {
 };
 
 export const getCategoriesWithServices = async (tenantID) => {
-  console.log("getCategoriesWithServices", tenantID);
+  console.log("getCategoriesWithServices ------>>>> --------- >", tenantID);
   return handleRequest("get", "/Categories/services", null, null, tenantID);
 };
 export const getAvailableSlots = async (data, tenantID) => {

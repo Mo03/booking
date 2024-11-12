@@ -18,18 +18,21 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCategoriesAndServices();
-  }, []);
+    if (tenantID) {
+      fetchCategoriesAndServices();
+    }
+  }, [tenantID]);
 
   const fetchCategoriesAndServices = async () => {
     setLoading(true);
     try {
       const data = await getCategoriesWithServices(tenantID);
       setCategories(data);
-      setServices(data);
+      const allServices = data.flatMap((category) => category.services || []);
+      setServices(allServices);
     } catch (error) {
       console.error("Error fetching categories and services:", error);
-      setError("Error fetching categories and services");
+      setError(error.message || "Error fetching categories and services");
     } finally {
       setLoading(false);
     }

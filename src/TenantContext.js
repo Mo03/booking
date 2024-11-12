@@ -1,17 +1,15 @@
 import React, { createContext, useContext } from "react";
-import { getTenantIDFromSubdomain } from "./utils/subdomain";
+import { useTenantIDFromSubdomain as useTenantID } from "./hooks/useTenantID";
 
 const TenantContext = createContext();
 
 export const TenantProvider = ({ children }) => {
-  const tenantID = getTenantIDFromSubdomain();
+  const tenantID = useTenantID();
   return (
     <TenantContext.Provider value={tenantID}>{children}</TenantContext.Provider>
   );
 };
 
 export const useTenant = () => {
-  return "test";
-  //return useContext(TenantContext);
+  return useContext(TenantContext);
 };
-// test
