@@ -123,14 +123,18 @@ const BookingPage = () => {
         {loading ? (
           <Loader />
         ) : bookingReference ? (
-          <div className="booking-confirmation">
+          <div className="booking-confirmation" dir="ltr">
             <h2>! تم تأكيد الحجز</h2>
-            <h4>مع {tenantID}</h4>
+            <h4> {tenantID} مع</h4>
             <p>
               <img
                 src={dateIcon}
                 alt="Date"
-                style={{ width: "20px", marginRight: "8px" }}
+                style={{
+                  width: "20px",
+                  marginRight: "8px",
+                  margin: "0 0 -3px 5px",
+                }}
               />
               التاريخ: <span> &nbsp; {formattedDate}</span>
             </p>
@@ -138,12 +142,15 @@ const BookingPage = () => {
               <img
                 src={timeIcon}
                 alt="Time"
-                style={{ width: "20px", marginRight: "8px" }}
+                style={{
+                  width: "20px",
+                  marginRight: "8px",
+                  margin: "0 0 -3px 5px",
+                }}
               />
               الوقت: <span> &nbsp; {formattedTime}</span>
             </p>
             <p>
-              رقم الحجز: <span> &nbsp; {bookingReference} </span>
               <button
                 onClick={handleCopyBookingID}
                 style={{
@@ -156,8 +163,13 @@ const BookingPage = () => {
                 <img
                   src={copyIcon}
                   alt="Copy"
-                  style={{ width: "20px", height: "20px" }}
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    margin: "0 0 -3px 5px",
+                  }}
                 />
+                رقم الحجز: <span> &nbsp; {bookingReference} </span>
               </button>
             </p>
             <p>
