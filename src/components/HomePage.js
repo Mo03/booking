@@ -6,6 +6,7 @@ import CategoryFilter from "./CategoryFilter";
 import ServiceList from "./ServiceList";
 import "./HomePage.css";
 import { useTenant } from "../TenantContext";
+import Loader from "./common/Loader";
 
 const HomePage = () => {
   const tenantID = useTenant();
@@ -61,9 +62,7 @@ const HomePage = () => {
       />
       <div className="section">
         {loading ? (
-          <div className="loader-container">
-            <div className="loader"></div>
-          </div>
+          <Loader />
         ) : (
           <ServiceList
             categories={categories}
