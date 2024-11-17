@@ -6,6 +6,7 @@ import "./AvailableSlotsCalendar.css";
 import { getAvailableSlots } from "../services/api";
 import { useTenant } from "../TenantContext";
 import { FaCalendarAlt } from "react-icons/fa"; // Import the calendar icon from react-icons
+import Loader from "./common/Loader"; // Add this import
 
 const AvailableSlotsCalendar = ({ serviceId }) => {
   const tenantID = useTenant();
@@ -90,7 +91,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
     <div className="available-slots-calendar">
       {error && <div className="error">{error}</div>}
       {loading ? (
-        <div>Loading calendar...</div>
+        <Loader />
       ) : (
         <>
           <Calendar
