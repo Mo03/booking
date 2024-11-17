@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./BookingPage.css";
 import { useTenant } from "../TenantContext";
 import { addBooking } from "../services/api";
+import Loader from "./common/Loader";
 import backIcon from "../assets/backIcon.svg"; // Import the back icon
 import dateIcon from "../assets/dateIcon.svg"; // Import the date icon
 import timeIcon from "../assets/timeIcon.svg"; // Import the time icon
@@ -22,6 +23,7 @@ const BookingPage = () => {
   const location = useLocation();
   const { serviceId, selectedDate, selectedTime, serviceName } = location.state;
   const [serviceInfo, setServiceInfo] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -54,6 +56,8 @@ const BookingPage = () => {
       return;
     }
 
+    setLoading(true);
+
     const updatedDate = new Date(selectedDate);
     const year = updatedDate.getFullYear();
     const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
@@ -79,6 +83,8 @@ const BookingPage = () => {
     } catch (error) {
       console.error("Error booking slot:", error);
       setErrors({ form: "خطأ في حجز الموعد" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,7 +120,9 @@ const BookingPage = () => {
         <h4 style={{ marginTop: "13px" }}>{tenantID}</h4>
       </div>
       <div className="booking-page">
-        {bookingReference ? (
+        {loading ? (
+          <Loader />
+        ) : bookingReference ? (
           <div className="booking-confirmation">
             <h2>! تم تأكيد الحجز</h2>
             <h4>مع {tenantID}</h4>
