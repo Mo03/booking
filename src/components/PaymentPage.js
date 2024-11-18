@@ -7,7 +7,7 @@ const PaymentPage = () => {
       amount: 200,
       currency: "SAR",
       description: "Coffee Order #1",
-      publishable_api_key: "pk_live_xEa2YukEoWJrofHZWjGDzokYh5pfbCTHrQfaK1oE",
+      publishable_api_key: process.env.REACT_APP_MOYASAR_PUBLISHABLE_KEY,
       callback_url: "https://moyasar.com/thanks",
       methods: ["creditcard"],
     });
