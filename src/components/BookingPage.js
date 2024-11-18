@@ -10,22 +10,23 @@ import timeIcon from "../assets/timeIcon.svg"; // Import the time icon
 
 import copyIcon from "../assets/copyIcon.svg"; // Import the copy icon
 import PaymentPage from "./PaymentPage";
+import BookingConfirmation from "./BookingConfirmation";
 
 const BookingPage = () => {
   const tenantID = useTenant();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [PhoneNumber, setPhone] = useState("");
-  const [bookingReference, setBookingReference] = useState(null);
+  const [firstName, setFirstName] = useState("test");
+  const [lastName, setLastName] = useState("test");
+  const [email, setEmail] = useState("test@test.com");
+  const [PhoneNumber, setPhone] = useState("543211234");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
   const { serviceId, selectedDate, selectedTime, serviceName, price } =
     location.state;
-  const [serviceInfo, setServiceInfo] = useState();
+  const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [bookingData, setBookingData] = useState(null);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -59,19 +60,13 @@ const BookingPage = () => {
       return;
     }
 
-    setShowPayment(true);
-  };
-
-  const handlePaymentSuccess = async () => {
-    setLoading(true);
-
     const updatedDate = new Date(selectedDate);
     const year = updatedDate.getFullYear();
     const month = String(updatedDate.getMonth() + 1).padStart(2, "0");
     const day = String(updatedDate.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}T00:00:00`;
 
-    const bookingData = {
+    setBookingData({
       user: {
         firstName,
         lastName,
@@ -81,16 +76,41 @@ const BookingPage = () => {
       serviceId,
       bookingDate: formattedDate,
       startTime: selectedTime,
-    };
+    });
+
+    setShowPayment(true);
+  };
+
+  const handlePaymentSuccess = async () => {
+    setLoading(true);
 
     try {
       const response = await addBooking(bookingData, tenantID);
-      setBookingReference(response.reference);
-      setServiceInfo(response.service);
+
+      // Format the date and time for display
+      const bookingDate = new Date(bookingData.bookingDate);
+      const formattedDate = bookingDate.toLocaleDateString("ar-SA");
+      const formattedTime = bookingData.startTime;
+
+      const confirmationData = {
+        tenantID: tenantID,
+        formattedDate: formattedDate,
+        formattedTime: formattedTime,
+        bookingReference: response.reference,
+        serviceInfo: {
+          name: serviceName,
+          price: price,
+          duration: response.duration || "60",
+        },
+      };
+
+      // Navigate to thanks page with booking info
+      navigate("/thanks", {
+        state: confirmationData,
+      });
     } catch (error) {
       console.error("Error booking slot:", error);
       setErrors({ form: "خطأ في حجز الموعد" });
-    } finally {
       setLoading(false);
       setShowPayment(false);
     }
@@ -105,7 +125,7 @@ const BookingPage = () => {
   });
 
   const handleCopyBookingID = () => {
-    navigator.clipboard.writeText(bookingReference).then(
+    navigator.clipboard.writeText(booking.reference).then(
       () => {
         alert("تم نسخ رقم الحجز إلى الحافظة!");
       },
@@ -135,66 +155,15 @@ const BookingPage = () => {
             <h2>الدفع</h2>
             <PaymentPage amount={price || 0} onSuccess={handlePaymentSuccess} />
           </div>
-        ) : bookingReference ? (
-          <div className="booking-confirmation" dir="ltr">
-            <h2>! تم تأكيد الحجز</h2>
-            <h4> {tenantID} مع</h4>
-            <p>
-              <img
-                src={dateIcon}
-                alt="Date"
-                style={{
-                  width: "20px",
-                  marginRight: "8px",
-                  margin: "0 0 -3px 5px",
-                }}
-              />
-              التاريخ: <span> &nbsp; {formattedDate}</span>
-            </p>
-            <p>
-              <img
-                src={timeIcon}
-                alt="Time"
-                style={{
-                  width: "20px",
-                  marginRight: "8px",
-                  margin: "0 0 -3px 5px",
-                }}
-              />
-              الوقت: <span> &nbsp; {formattedTime}</span>
-            </p>
-            <p>
-              <button
-                onClick={handleCopyBookingID}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  marginLeft: "8px",
-                }}
-              >
-                <img
-                  src={copyIcon}
-                  alt="Copy"
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    margin: "0 0 -3px 5px",
-                  }}
-                />
-                رقم الحجز: <span> &nbsp; {bookingReference} </span>
-              </button>
-            </p>
-            <p>
-              الخدمة: <span> &nbsp; {serviceInfo.name} </span>
-            </p>
-            <p>
-              السعر: <span> &nbsp; {serviceInfo.price} ريال</span>
-            </p>
-            <p>
-              المدة: <span> &nbsp; {serviceInfo.duration} دقيقة</span>
-            </p>
-          </div>
+        ) : booking ? (
+          <BookingConfirmation
+            tenantID={tenantID}
+            formattedDate={formattedDate}
+            formattedTime={formattedTime}
+            bookingReference={booking.reference}
+            serviceInfo={booking.service}
+            onCopyBookingID={handleCopyBookingID}
+          />
         ) : (
           <form className="booking-form" onSubmit={handleBooking}>
             {errors.form && <div className="error">{errors.form}</div>}

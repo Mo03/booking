@@ -12,7 +12,7 @@ const PaymentPage = ({ amount, onSuccess }) => {
         currency: "SAR",
         description: "Service Booking Payment",
         publishable_api_key: process.env.REACT_APP_MOYASAR_KEY,
-        callback_url: window.location.href,
+        callback_url: `${window.location.origin}/thanks`,
         methods: ["creditcard"],
         on_completed: (payment) => {
           console.log("Payment completed:", payment);

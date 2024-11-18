@@ -5,6 +5,8 @@ import CalendarPage from "./components/CalendarPage";
 import BookingPage from "./components/BookingPage";
 import NotFoundPage from "./components/NotFoundPage";
 import PaymentPage from "./components/PaymentPage";
+import ThanksPage from "./components/ThanksPage";
+import BookingConfirmation from "./components/BookingConfirmation";
 import { useTenant } from "./TenantContext";
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
       <Route path="/calendar/:serviceId/booking" element={<BookingPage />} />
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/404" element={<NotFoundPage />} />
+      <Route path="/thanks" element={<ThanksPage />} />
+      <Route path="/booking-confirmed" element={<BookingConfirmation />} />
     </Routes>
   );
 };

@@ -1,0 +1,16 @@
+.thanks-container {
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.thanks-container h1 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.thanks-container p {
+  color: #34495e;
+  margin-bottom: 0.5rem;
+} 
