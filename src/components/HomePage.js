@@ -44,7 +44,9 @@ const HomePage = () => {
   };
 
   const handleBook = (service) => {
-    navigate(`/calendar/${service.id}`);
+    navigate(`/calendar/${service.id}`, {
+      state: { servicePrice: service.price },
+    });
   };
 
   const handleSelectService = (serviceId) => {

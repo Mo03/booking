@@ -8,7 +8,7 @@ import { useTenant } from "../TenantContext";
 import { FaCalendarAlt } from "react-icons/fa"; // Import the calendar icon from react-icons
 import Loader from "./common/Loader"; // Add this import
 
-const AvailableSlotsCalendar = ({ serviceId }) => {
+const AvailableSlotsCalendar = ({ serviceId, servicePrice }) => {
   const tenantID = useTenant();
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -16,6 +16,7 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,6 +63,8 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
     const slot = availableSlots.find(
       (slot) => new Date(slot.date).toDateString() === date.toDateString()
     );
+    console.log("Selected slot:", slot);
+    setSelectedSlot(slot);
     setSelectedTime(slot ? slot.availableTimes : []);
   };
 
@@ -82,8 +85,14 @@ const AvailableSlotsCalendar = ({ serviceId }) => {
   };
 
   const handleBookClick = (time) => {
+    console.log("Service price:", servicePrice);
     navigate(`/calendar/${serviceId}/booking`, {
-      state: { serviceId, selectedDate, selectedTime: time },
+      state: {
+        serviceId,
+        selectedDate,
+        selectedTime: time,
+        price: servicePrice,
+      },
     });
   };
 

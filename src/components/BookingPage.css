@@ -86,3 +86,17 @@
       border-radius: 8px;
     }
   }
+
+  .payment-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .payment-page {
+    text-align: center;
+  }
+
+  .payment-page h3 {
+    margin-bottom: 20px;
+  }

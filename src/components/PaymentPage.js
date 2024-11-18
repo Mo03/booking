@@ -1,22 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import "./PaymentPage.css";
 
-const PaymentPage = () => {
+const PaymentPage = ({ amount, onSuccess }) => {
+  const paymentRef = useRef(null);
+
   useEffect(() => {
-    window.Moyasar.init({
-      element: ".mysr-form",
-      amount: 200,
-      currency: "SAR",
-      description: "Coffee Order #1",
-      publishable_api_key: process.env.REACT_APP_MOYASAR_PUBLISHABLE_KEY,
-      callback_url: "https://moyasar.com/thanks",
-      methods: ["creditcard"],
-    });
-  }, []);
+    if (paymentRef.current && window.Moyasar) {
+      const moyasar = window.Moyasar.init({
+        element: paymentRef.current,
+        amount: amount * 100, // Convert to halala
+        currency: "SAR",
+        description: "Service Booking Payment",
+        publishable_api_key: process.env.REACT_APP_MOYASAR_KEY,
+        callback_url: window.location.href,
+        methods: ["creditcard"],
+        on_completed: (payment) => {
+          console.log("Payment completed:", payment);
+          onSuccess(payment);
+        },
+      });
+
+      return () => {
+        if (moyasar && moyasar.unmount) {
+          moyasar.unmount();
+        }
+      };
+    }
+  }, [amount, onSuccess]);
 
   return (
-    <div className="container">
-      <h1>Payment</h1>
-      <div className="mysr-form"></div>
+    <div className="payment-wrapper">
+      <div ref={paymentRef} id="moyasar-payment"></div>
     </div>
   );
 };

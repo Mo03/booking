@@ -7,9 +7,9 @@ import Loader from "./common/Loader";
 import backIcon from "../assets/backIcon.svg"; // Import the back icon
 import dateIcon from "../assets/dateIcon.svg"; // Import the date icon
 import timeIcon from "../assets/timeIcon.svg"; // Import the time icon
-import bookingIcon from "../assets/bookingIcon.svg"; // Import the booking ID icon
-import serviceIcon from "../assets/serviceIcon.svg"; // Import the service icon
+
 import copyIcon from "../assets/copyIcon.svg"; // Import the copy icon
+import PaymentPage from "./PaymentPage";
 
 const BookingPage = () => {
   const tenantID = useTenant();
@@ -21,9 +21,11 @@ const BookingPage = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
-  const { serviceId, selectedDate, selectedTime, serviceName } = location.state;
+  const { serviceId, selectedDate, selectedTime, serviceName, price } =
+    location.state;
   const [serviceInfo, setServiceInfo] = useState();
   const [loading, setLoading] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -50,12 +52,17 @@ const BookingPage = () => {
 
   const handleBooking = async (e) => {
     e.preventDefault();
+
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
+    setShowPayment(true);
+  };
+
+  const handlePaymentSuccess = async () => {
     setLoading(true);
 
     const updatedDate = new Date(selectedDate);
@@ -85,6 +92,7 @@ const BookingPage = () => {
       setErrors({ form: "خطأ في حجز الموعد" });
     } finally {
       setLoading(false);
+      setShowPayment(false);
     }
   };
 
@@ -122,6 +130,11 @@ const BookingPage = () => {
       <div className="booking-page">
         {loading ? (
           <Loader />
+        ) : showPayment ? (
+          <div className="payment-container">
+            <h2>الدفع</h2>
+            <PaymentPage amount={price || 0} onSuccess={handlePaymentSuccess} />
+          </div>
         ) : bookingReference ? (
           <div className="booking-confirmation" dir="ltr">
             <h2>! تم تأكيد الحجز</h2>

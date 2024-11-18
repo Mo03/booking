@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import AvailableSlotsCalendar from "./AvailableSlotsCalendar"; // Reuse this component
 import "./CalendarPage.css"; // Import CSS for styling
 import { useTenant } from "../TenantContext";
@@ -10,6 +10,8 @@ const CalendarPage = () => {
 
   const { serviceId } = useParams(); // Get the serviceId from the URL
   const navigate = useNavigate(); // Initialize useNavigate
+  const location = useLocation(); // Add this
+  const { servicePrice } = location.state || {}; // Get price from navigation state
 
   const handleBackClick = () => {
     navigate("/"); // Navigate back to the homepage
@@ -27,7 +29,10 @@ const CalendarPage = () => {
         </button>
         <h4 style={{ marginTop: "13px" }}>{tenantID}</h4>
       </div>
-      <AvailableSlotsCalendar serviceId={serviceId} />
+      <AvailableSlotsCalendar
+        serviceId={serviceId}
+        servicePrice={servicePrice} // Pass the price to calendar
+      />
     </div>
   );
 };
