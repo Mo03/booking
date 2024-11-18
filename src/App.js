@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage";
 import CalendarPage from "./components/CalendarPage";
 import BookingPage from "./components/BookingPage";
 import NotFoundPage from "./components/NotFoundPage";
+import PaymentPage from "./components/PaymentPage";
 import { useTenant } from "./TenantContext";
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/calendar/:serviceId" element={<CalendarPage />} />
       <Route path="/calendar/:serviceId/booking" element={<BookingPage />} />
+      <Route path="/payment" element={<PaymentPage />} />
       <Route path="/404" element={<NotFoundPage />} />
     </Routes>
   );
