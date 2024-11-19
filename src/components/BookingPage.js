@@ -14,10 +14,10 @@ import BookingConfirmation from "./BookingConfirmation";
 
 const BookingPage = () => {
   const tenantID = useTenant();
-  const [firstName, setFirstName] = useState("test");
-  const [lastName, setLastName] = useState("test");
-  const [email, setEmail] = useState("test@test.com");
-  const [PhoneNumber, setPhone] = useState("543211234");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [PhoneNumber, setPhone] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
