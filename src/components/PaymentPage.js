@@ -8,7 +8,7 @@ const PaymentPage = ({ amount, onSuccess }) => {
     if (paymentRef.current && window.Moyasar) {
       const moyasar = window.Moyasar.init({
         element: paymentRef.current,
-        amount: amount * 100, // Convert to halala
+        amount: 50, // Convert to halala
         currency: "SAR",
         description: "Service Booking Payment",
         publishable_api_key: process.env.REACT_APP_MOYASAR_KEY,
