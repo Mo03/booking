@@ -2,31 +2,28 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./BookingPage.css";
 import { useTenant } from "../TenantContext";
-import { addBooking } from "../services/api";
 import Loader from "./common/Loader";
 import backIcon from "../assets/backIcon.svg"; // Import the back icon
-import dateIcon from "../assets/dateIcon.svg"; // Import the date icon
-import timeIcon from "../assets/timeIcon.svg"; // Import the time icon
 
-import copyIcon from "../assets/copyIcon.svg"; // Import the copy icon
 import PaymentPage from "./PaymentPage";
 import BookingConfirmation from "./BookingConfirmation";
 
 const BookingPage = () => {
   const tenantID = useTenant();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [PhoneNumber, setPhone] = useState("");
+  const [firstName, setFirstName] = useState("Mohammed");
+  const [lastName, setLastName] = useState("H");
+  const [email, setEmail] = useState("test@test.com");
+  const [PhoneNumber, setPhone] = useState("555555555");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
   const { serviceId, selectedDate, selectedTime, serviceName, price } =
     location.state;
-  const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [bookingData, setBookingData] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmationData, setConfirmationData] = useState(null);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -81,41 +78,6 @@ const BookingPage = () => {
     setShowPayment(true);
   };
 
-  const handlePaymentSuccess = async () => {
-    setLoading(true);
-
-    try {
-      const response = await addBooking(bookingData, tenantID);
-
-      // Format the date and time for display
-      const bookingDate = new Date(bookingData.bookingDate);
-      const formattedDate = bookingDate.toLocaleDateString("ar-SA");
-      const formattedTime = bookingData.startTime;
-
-      const confirmationData = {
-        tenantID: tenantID,
-        formattedDate: formattedDate,
-        formattedTime: formattedTime,
-        bookingReference: response.reference,
-        serviceInfo: {
-          name: serviceName,
-          price: price,
-          duration: response.duration || "60",
-        },
-      };
-
-      // Navigate to thanks page with booking info
-      navigate("/thanks", {
-        state: confirmationData,
-      });
-    } catch (error) {
-      console.error("Error booking slot:", error);
-      setErrors({ form: "خطأ في حجز الموعد" });
-      setLoading(false);
-      setShowPayment(false);
-    }
-  };
-
   const formattedDate = new Date(selectedDate).toLocaleDateString();
   const formattedTime = new Date(
     `1970-01-01T${selectedTime}`
@@ -123,17 +85,6 @@ const BookingPage = () => {
     hour: "2-digit",
     minute: "2-digit",
   });
-
-  const handleCopyBookingID = () => {
-    navigator.clipboard.writeText(booking.reference).then(
-      () => {
-        alert("تم نسخ رقم الحجز إلى الحافظة!");
-      },
-      (err) => {
-        console.error("Could not copy booking ID: ", err);
-      }
-    );
-  };
 
   return (
     <div className="booking-page-container">
@@ -150,20 +101,24 @@ const BookingPage = () => {
       <div className="booking-page">
         {loading ? (
           <Loader />
+        ) : showConfirmation ? (
+          <BookingConfirmation {...confirmationData} />
         ) : showPayment ? (
           <div className="payment-container">
             <h2>الدفع</h2>
-            <PaymentPage amount={price || 0} onSuccess={handlePaymentSuccess} />
+            <PaymentPage
+              amount={price || 0}
+              bookingData={bookingData}
+              tenantID={tenantID}
+              serviceName={serviceName}
+              price={price}
+              setShowConfirmation={setShowConfirmation}
+              setShowPayment={setShowPayment}
+              setLoading={setLoading}
+              setErrors={setErrors}
+              setConfirmationData={setConfirmationData}
+            />
           </div>
-        ) : booking ? (
-          <BookingConfirmation
-            tenantID={tenantID}
-            formattedDate={formattedDate}
-            formattedTime={formattedTime}
-            bookingReference={booking.reference}
-            serviceInfo={booking.service}
-            onCopyBookingID={handleCopyBookingID}
-          />
         ) : (
           <form className="booking-form" onSubmit={handleBooking}>
             {errors.form && <div className="error">{errors.form}</div>}
