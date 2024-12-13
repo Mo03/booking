@@ -7,6 +7,7 @@ import backIcon from "../assets/backIcon.svg"; // Import the back icon
 
 import PaymentPage from "./PaymentPage";
 import BookingConfirmation from "./BookingConfirmation";
+import ReviewPage from "./ReviewPage";
 
 const BookingPage = () => {
   const tenantID = useTenant();
@@ -24,6 +25,8 @@ const BookingPage = () => {
   const [bookingData, setBookingData] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationData, setConfirmationData] = useState(null);
+  const [showReview, setShowReview] = useState(false);
+  const [reviewData, setReviewData] = useState(null);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -63,7 +66,7 @@ const BookingPage = () => {
     const day = String(updatedDate.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}T00:00:00`;
 
-    setBookingData({
+    const bookingData = {
       user: {
         firstName,
         lastName,
@@ -73,8 +76,23 @@ const BookingPage = () => {
       serviceId,
       bookingDate: formattedDate,
       startTime: selectedTime,
-    });
+    };
 
+    setReviewData({
+      ...bookingData,
+      serviceName: location.state?.serviceName,
+      price: location.state?.price,
+    });
+    setShowReview(true);
+  };
+
+  const handleReviewBack = () => {
+    setShowReview(false);
+  };
+
+  const handleReviewConfirm = () => {
+    setBookingData(reviewData);
+    setShowReview(false);
     setShowPayment(true);
   };
 
@@ -104,21 +122,24 @@ const BookingPage = () => {
         ) : showConfirmation ? (
           <BookingConfirmation {...confirmationData} />
         ) : showPayment ? (
-          <div className="payment-container">
-            <h2>الدفع</h2>
-            <PaymentPage
-              amount={price || 0}
-              bookingData={bookingData}
-              tenantID={tenantID}
-              serviceName={serviceName}
-              price={price}
-              setShowConfirmation={setShowConfirmation}
-              setShowPayment={setShowPayment}
-              setLoading={setLoading}
-              setErrors={setErrors}
-              setConfirmationData={setConfirmationData}
-            />
-          </div>
+          <PaymentPage
+            amount={price || 0}
+            bookingData={bookingData}
+            tenantID={tenantID}
+            serviceName={serviceName}
+            price={price}
+            setShowConfirmation={setShowConfirmation}
+            setShowPayment={setShowPayment}
+            setLoading={setLoading}
+            setErrors={setErrors}
+            setConfirmationData={setConfirmationData}
+          />
+        ) : showReview ? (
+          <ReviewPage
+            bookingDetails={reviewData}
+            onConfirm={handleReviewConfirm}
+            onBack={handleReviewBack}
+          />
         ) : (
           <form className="booking-form" onSubmit={handleBooking}>
             {errors.form && <div className="error">{errors.form}</div>}
