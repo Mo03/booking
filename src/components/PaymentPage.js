@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./PaymentPage.css";
 import { useNavigate } from "react-router-dom";
-import { addBooking } from "../services/api";
 
 const PaymentPage = ({
   amount,
@@ -71,11 +70,11 @@ const PaymentPage = ({
       };
 
       console.log("Processing booking with payload:", bookingPayload);
-      const response = await addBooking(bookingPayload, tenantID);
+      //const response = await addBooking(bookingPayload, tenantID);
 
-      if (!response || !response.reference) {
-        throw new Error("Invalid response from booking service");
-      }
+      //if (!response || !response.reference) {
+      //  throw new Error("Invalid response from booking service");
+      //}
 
       const bookingDate = new Date(bookingData.bookingDate);
       const formattedDate = bookingDate.toLocaleDateString("ar-SA");
@@ -85,11 +84,11 @@ const PaymentPage = ({
         tenantID,
         formattedDate,
         formattedTime,
-        bookingReference: response.reference,
+        //bookingReference: response.reference,
         serviceInfo: {
           name: serviceName,
           price,
-          duration: response.duration || "60",
+          //duration: response.duration || "60",
         },
       };
 
