@@ -11,7 +11,7 @@ const CalendarPage = () => {
   const { serviceId } = useParams(); // Get the serviceId from the URL
   const navigate = useNavigate(); // Initialize useNavigate
   const location = useLocation(); // Add this
-  const { servicePrice } = location.state || {}; // Get price from navigation state
+  const { servicePrice, serviceName } = location.state || {}; // Get both price and name from navigation state
 
   const handleBackClick = () => {
     navigate("/"); // Navigate back to the homepage
@@ -31,7 +31,8 @@ const CalendarPage = () => {
       </div>
       <AvailableSlotsCalendar
         serviceId={serviceId}
-        servicePrice={servicePrice} // Pass the price to calendar
+        servicePrice={servicePrice}
+        serviceName={serviceName} // Pass the service name
       />
     </div>
   );

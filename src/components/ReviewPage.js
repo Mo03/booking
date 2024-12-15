@@ -5,6 +5,8 @@ import backIcon from "../assets/backIcon.svg";
 import { useTenant } from "../TenantContext";
 
 const ReviewPage = ({ bookingDetails, onConfirm, onBack }) => {
+  console.log("Booking Details in Review:", bookingDetails);
+
   const tenantID = useTenant();
   const navigate = useNavigate();
 

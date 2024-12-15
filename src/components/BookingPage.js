@@ -76,7 +76,10 @@ const BookingPage = () => {
       serviceId,
       bookingDate: formattedDate,
       startTime: selectedTime,
+      serviceName: serviceName, // Add this explicitly
+      price: price, // Add this explicitly
     };
+    console.log("Review Data:", bookingData);
 
     setReviewData({
       ...bookingData,

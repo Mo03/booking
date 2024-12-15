@@ -45,7 +45,10 @@ const HomePage = () => {
 
   const handleBook = (service) => {
     navigate(`/calendar/${service.id}`, {
-      state: { servicePrice: service.price },
+      state: {
+        servicePrice: service.price,
+        serviceName: service.name,
+      },
     });
   };
 
