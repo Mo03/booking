@@ -33,12 +33,17 @@ const PaymentPage = ({
     if (paymentRef.current && window.Moyasar) {
       const moyasar = window.Moyasar.init({
         element: paymentRef.current,
-        amount: amount * 100,
+        amount: 1 * 100,
         currency: "SAR",
         description: `حجز ${serviceName}`,
         publishable_api_key: process.env.REACT_APP_MOYASAR_KEY,
         callback_url: `${window.location.origin}/booking-confirmed`,
-        methods: ["creditcard"],
+        methods: ["creditcard", "applepay"],
+        apple_pay: {
+          country: "SA",
+          label: serviceName,
+          validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate",
+        },
         on_completed: (payment) => {
           console.log("Payment completed:", payment);
           handlePaymentSuccess(payment);
