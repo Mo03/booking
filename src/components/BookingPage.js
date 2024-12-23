@@ -11,10 +11,10 @@ import ReviewPage from "./ReviewPage";
 
 const BookingPage = () => {
   const tenantID = useTenant();
-  const [firstName, setFirstName] = useState("Mohammed");
-  const [lastName, setLastName] = useState("H");
-  const [email, setEmail] = useState("test@test.com");
-  const [PhoneNumber, setPhone] = useState("555555555");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [PhoneNumber, setPhone] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
