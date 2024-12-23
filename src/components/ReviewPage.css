@@ -40,6 +40,20 @@
   direction: rtl;
 }
 
+/* Add this media query for mobile devices */
+@media screen and (max-width: 480px) {
+  .review-section p {
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;  /* Add this line */
+
+  }
+  
+  .review-section p span {
+    margin-bottom: 2px;
+  }
+}
+
 .review-section p span {
   font-weight: bold;
   color: #666;
