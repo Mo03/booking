@@ -10,6 +10,7 @@ export const useTenantIDFromSubdomain = () => {
     const getTenantID = async () => {
       const { hostname } = window.location;
       //const hostname = "test.localhost:3000";
+      // test.localhost:3000
 
       console.log("hostname ------>>>> ", hostname);
       const tenant = hostname.split(".")[0];
