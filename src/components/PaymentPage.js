@@ -44,10 +44,8 @@ const PaymentPage = ({
           label: serviceName,
           validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate",
         },
-        on_completed: (payment) => {
-          console.log("Payment completed:", payment);
-          handlePaymentSuccess(payment);
-        },
+        on_completed:
+          "https://bookly-code-dev.azurewebsites.net/api/payments/save",
         on_failed: (error) => {
           console.error("Payment failed:", error);
           setErrors({ form: "فشلت عملية الدفع. يرجى المحاولة مرة أخرى" });
