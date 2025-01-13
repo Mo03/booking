@@ -46,6 +46,9 @@ const PaymentPage = ({
         },
         on_completed:
           "https://bookly-code-dev.azurewebsites.net/api/payments/save",
+        metadata: {
+          tenant_id: tenantID,
+        },
         on_failed: (error) => {
           console.error("Payment failed:", error);
           setErrors({ form: "فشلت عملية الدفع. يرجى المحاولة مرة أخرى" });
