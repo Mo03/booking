@@ -47,6 +47,9 @@ const PaymentPage = ({
         on_completed: function (payment) {
           console.log("Payment completed:", payment);
           console.log("tenantID:", tenantID);
+          setTimeout(() => {
+            handlePaymentSuccess(payment);
+          }, 30000);
         },
         metadata: {
           tenant_id: tenantID,
