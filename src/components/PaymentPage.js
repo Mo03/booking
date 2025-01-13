@@ -44,8 +44,10 @@ const PaymentPage = ({
           label: serviceName,
           validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate",
         },
-        on_completed:
-          "https://bookly-code-dev.azurewebsites.net/api/payments/save",
+        on_completed: function (payment) {
+          console.log("Payment completed:", payment);
+          console.log("tenantID:", tenantID);
+        },
         metadata: {
           tenant_id: tenantID,
         },
