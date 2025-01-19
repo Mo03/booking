@@ -74,18 +74,38 @@ const PaymentPage = ({
     setLoading(true);
 
     try {
+      console.log("Payment Details:", paymentDetails);
+
+      // First, save the payment details
+      const paymentResponse = await fetch(
+        `${process.env.REACT_APP_API_URL}/Payments/save`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Tenant-ID": tenantID,
+          },
+          body: JSON.stringify(paymentDetails),
+        }
+      );
+
+      if (!paymentResponse.ok) {
+        throw new Error("Failed to save payment details");
+      }
+
+      // If payment was saved successfully, proceed with booking
       const bookingPayload = {
         ...bookingData,
         paymentId: paymentDetails.id,
-        paymentStatus: paymentDetails.status,
+        //paymentStatus: paymentDetails.status,
       };
 
       console.log("Processing booking with payload:", bookingPayload);
-      //const response = await addBooking(bookingPayload, tenantID);
+      const response = await addBooking(bookingPayload, tenantID);
 
-      //if (!response || !response.reference) {
-      //  throw new Error("Invalid response from booking service");
-      //}
+      if (!response || !response.reference) {
+        throw new Error("Invalid response from booking service");
+      }
 
       const bookingDate = new Date(bookingData.bookingDate);
       const formattedDate = bookingDate.toLocaleDateString("ar-SA");
@@ -95,11 +115,11 @@ const PaymentPage = ({
         tenantID,
         formattedDate,
         formattedTime,
-        //bookingReference: response.reference,
+        bookingReference: response.reference,
         serviceInfo: {
           name: serviceName,
           price,
-          //duration: response.duration || "60",
+          duration: response.duration || "60",
         },
       };
 
@@ -108,9 +128,9 @@ const PaymentPage = ({
       setShowPayment(false);
       setLoading(false);
     } catch (error) {
-      console.error("Error booking slot:", error);
+      console.error("Error processing payment/booking:", error);
       setErrors({
-        form: "حدث خطأ أثناء حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بالدعم",
+        form: "حدث خطأ أثناء معالجة الدفع. يرجى المحاولة مرة أخرى أو الاتصال بالدعم",
       });
       setLoading(false);
       setShowPayment(false);
