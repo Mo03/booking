@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./PaymentPage.css";
 import { useNavigate } from "react-router-dom";
+import { addBooking } from "../services/api";
 
 const PaymentPage = ({
   amount,
@@ -47,9 +48,7 @@ const PaymentPage = ({
         on_completed: function (payment) {
           console.log("Payment completed:", payment);
           console.log("tenantID:", tenantID);
-          setTimeout(() => {
-            handlePaymentSuccess(payment);
-          }, 30000);
+          handlePaymentSuccess(payment);
         },
         metadata: {
           tenant_id: tenantID,
@@ -71,35 +70,15 @@ const PaymentPage = ({
   }, [amount, bookingData, tenantID, serviceName, price]);
 
   const handlePaymentSuccess = async (paymentDetails) => {
+    console.log("paymentDetails ------>>>> ", paymentDetails);
     setLoading(true);
 
     try {
-      console.log("Payment Details:", paymentDetails);
-
-      // First, save the payment details
-      const paymentResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/Payments/save`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Tenant-ID": tenantID,
-          },
-          body: JSON.stringify(paymentDetails),
-        }
-      );
-
-      if (!paymentResponse.ok) {
-        throw new Error("Failed to save payment details");
-      }
-
-      // If payment was saved successfully, proceed with booking
       const bookingPayload = {
         ...bookingData,
         paymentId: paymentDetails.id,
-        //paymentStatus: paymentDetails.status,
+        paymentStatus: paymentDetails.status,
       };
-
       console.log("Processing booking with payload:", bookingPayload);
       const response = await addBooking(bookingPayload, tenantID);
 
@@ -119,18 +98,20 @@ const PaymentPage = ({
         serviceInfo: {
           name: serviceName,
           price,
-          duration: response.duration || "60",
+          //duration: response.duration || "60",
         },
       };
+
+      console.log("confirmationData ------>>>> ", confirmationData);
 
       setConfirmationData(confirmationData);
       setShowConfirmation(true);
       setShowPayment(false);
       setLoading(false);
     } catch (error) {
-      console.error("Error processing payment/booking:", error);
+      console.error("Error booking slot:", error);
       setErrors({
-        form: "حدث خطأ أثناء معالجة الدفع. يرجى المحاولة مرة أخرى أو الاتصال بالدعم",
+        form: "حدث خطأ أثناء حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بالدعم",
       });
       setLoading(false);
       setShowPayment(false);
@@ -139,11 +120,6 @@ const PaymentPage = ({
 
   return (
     <div className="payment-wrapper">
-      {!window.Moyasar && (
-        <div className="payment-error">
-          خطأ في تحميل نظام الدفع. يرجى تحديث الصفحة
-        </div>
-      )}
       <div ref={paymentRef} id="moyasar-payment"></div>
     </div>
   );
